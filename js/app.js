@@ -11,6 +11,7 @@ STATES.forEach(st => { st.reg = "na"; st.parent = "usa"; });
 const cById = Object.fromEntries([...COUNTRIES, ...STATES].map(c => [c.id, c]));
 // Timeline supplements (js/data/tl_*.js) extend country/state timelines.
 Object.entries(window.ATLAS_TL_PLUS || {}).forEach(([id, rows]) => { const c = cById[id]; if (c) { const have = new Set(c.tl.map(r => r[0] + "|" + r[1])); rows.forEach(r => { if (!have.has(r[0] + "|" + r[1])) c.tl.push(r); }); c.tl.sort((x, y) => x[0] - y[0]); } });
+Object.entries(window.ATLAS_PEOPLE_PLUS || {}).forEach(([id, txt]) => { const c = cById[id]; if (c && !c.people) c.people = txt; });
 const CF_CATS = { war: "Wars & conflicts", gov: "Government & politics", inv: "Inventions & firsts", biz: "Business & economy", ppl: "People", crime: "Crime & scandal", niche: "Niche & surprising" };
 const CF_LIST = [];
 Object.entries(CFACTS).forEach(([cid, list]) => list.forEach(([cat, text], i) => CF_LIST.push({ id: `cf-${cid}-${i}`, c: "country", cid, cat, text })));
@@ -46,6 +47,21 @@ const REGION_INTRO = {
 };
 const COUNTRY_SRC = { are: "History of the United Arab Emirates", mdv: "History of the Maldives", gbr: "History of the United Kingdom", nld: "History of the Netherlands", vat: "History of Vatican City", cze: "History of the Czech lands", cod: "History of the Democratic Republic of the Congo", cog: "History of the Republic of the Congo", caf: "History of the Central African Republic", civ: "History of Ivory Coast", gmb: "History of the Gambia", cpv: "History of Cape Verde", com: "History of the Comoros", phl: "History of the Philippines", mhl: "History of the Marshall Islands", fsm: "History of the Federated States of Micronesia", usa: "History of the United States", dom: "History of the Dominican Republic", bhs: "History of the Bahamas" };
 const BORDER_OWNER = { grl: "dnk", pri: "usa", ncl: "fra", flk: "gbr", atf: "fra" };
+// Long-lived entries change names over time; show the name that fits the selected year.
+const ERA_NAMES = {
+  spain: [[1479, 1898, "Spanish Empire"], [1899, 2025, "Spain"]],
+  germany: [[962, 1806, "Holy Roman Empire"], [1807, 1870, "German states"], [1871, 1918, "German Empire"], [1919, 1932, "Weimar Germany"], [1933, 1945, "Nazi Germany"], [1946, 1990, "East & West Germany"], [1991, 2025, "Germany"]],
+  netherlands: [[1581, 1795, "Dutch Republic"], [1796, 2025, "Netherlands"]],
+  "italy-ren": [[1300, 1860, "Italian states"], [1861, 1921, "Kingdom of Italy"], [1922, 1943, "Fascist Italy"], [1944, 2025, "Italy"]],
+  france: [[987, 1791, "Kingdom of France"], [1792, 1803, "French Republic"], [1804, 1814, "French Empire"], [1815, 1847, "Kingdom of France"], [1848, 1851, "Second Republic"], [1852, 1870, "Second French Empire"], [1871, 2025, "France"]],
+  russia: [[882, 1239, "Kievan Rus'"], [1240, 1546, "Grand Duchy of Moscow"], [1547, 1720, "Tsardom of Russia"], [1721, 1917, "Russian Empire"]],
+  balkans: [[1918, 1991, "Yugoslavia"], [1992, 2025, "Former Yugoslav states"]],
+  british: [[1600, 1706, "English Empire"], [1707, 1997, "British Empire"]],
+  "japan-shogun": [[1185, 1333, "Kamakura Japan"], [1336, 1573, "Ashikaga Japan"], [1574, 1602, "Japan (unification wars)"], [1603, 1868, "Tokugawa Japan"]],
+  "ethiopia-sol": [[1270, 1973, "Ethiopian Empire"], [1974, 1974, "Ethiopia"]],
+  mughal: [[1526, 1707, "Mughal Empire"], [1708, 1857, "Mughal Empire (declining)"]]
+};
+const nameAt = (e, y) => (ERA_NAMES[e.id] || []).find(([a, b]) => y >= a && y <= b)?.[2] || e.name;
 const slug = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 TOPICS.forEach(t => { t.id = slug(t.n); });
 const tById = Object.fromEntries(TOPICS.map(t => [t.id, t]));
@@ -294,7 +310,7 @@ function renderMap() {
       const col = REG_COLORS[e.reg] || "#e0a458";
       const dash = e.ev === "archaeological" ? "8 6" : e.ev === "oral" ? "2 6" : null;
       L.circle([e.lat, e.lng], { radius: e.r * 1000, color: col, weight: 1.5, dashArray: dash, fillColor: col, fillOpacity: e.ev === "documented" ? 0.14 : 0.07, interactive: false })
-        .bindTooltip(`<span data-ent-open="${e.id}" title="Open profile">${esc(e.name)}</span>`, { permanent: true, direction: "center", className: "civ-label", interactive: true }).addTo(civG);
+        .bindTooltip(`<span data-ent-open="${e.id}" data-r="${e.r}" title="Open profile: ${esc(e.name)}">${esc(nameAt(e, y))}</span>`, { permanent: true, direction: "center", className: "civ-label", interactive: true }).addTo(civG);
     });
   }
   if (S.layers.has("trade")) {
@@ -311,7 +327,25 @@ function renderMap() {
     m._evIdx = ev.idx; m.addTo(evG);
   });
   renderLayers();
+  declutterLabels();
 }
+// Hide labels that collide with a bigger empire's label; recheck after zoom or pan.
+function declutterLabels() {
+  clearTimeout(declutterLabels._t);
+  declutterLabels._t = setTimeout(() => {
+    const box = document.getElementById("map").getBoundingClientRect();
+    const els = [...document.querySelectorAll("#map .civ-label")].map(el => ({ el, r: +(el.querySelector("[data-r]")?.dataset.r || 0) })).sort((a, b) => b.r - a.r);
+    els.forEach(({ el }) => { el.style.visibility = "visible"; });
+    const placed = [];
+    for (const { el } of els) {
+      const b = el.getBoundingClientRect(), pad = 2;
+      if (!b.width || b.right < box.left || b.left > box.right || b.bottom < box.top || b.top > box.bottom) continue;
+      const hit = placed.some(p => b.left < p.right + pad && b.right > p.left - pad && b.top < p.bottom + pad && b.bottom > p.top - pad);
+      if (hit) el.style.visibility = "hidden"; else placed.push(b);
+    }
+  }, 80);
+}
+map.on("zoomend moveend", declutterLabels);
 
 function setYear(y, opts = {}) {
   S.year = Math.max(MIN_Y, Math.min(MAX_Y, Math.round(y)));
@@ -409,7 +443,7 @@ function renderMoment(replace) {
       const b = byReg[r];
       b.evs.sort((a, c) => order[a.kind] - order[c.kind] || a.y - c.y);
       return `<div class="region-h"><a data-open="region:${r}">${REGIONS[r]} →</a></div>
-      ${b.ents.map(e => `<div class="civrow" data-ent="${e.id}"><span class="sw" style="background:${REG_COLORS[e.reg]}"></span>${esc(e.name)}<span class="yrs">${fmtRange(e.start, e.end)}</span></div>`).join("")}
+      ${b.ents.map(e => `<div class="civrow" data-ent="${e.id}"><span class="sw" style="background:${REG_COLORS[e.reg]}"></span>${esc(nameAt(e, y))}<span class="yrs">${fmtRange(e.start, e.end)}</span></div>`).join("")}
       ${b.people.length ? `<div class="people-row"><span class="muted small">People alive:</span> ${b.people.map(t => chip("topic:" + t.id, t.n, `title="${esc(t.role || "")}"`)).join("")}</div>` : ""}
       ${collapsible(b.evs.map(evCard))}`;
     }).join("") || `<p class="muted">Little is recorded in Atlas for this exact moment yet.</p>`}
@@ -442,7 +476,7 @@ function placeAt(lat, lng, fromStack) {
     <h2 class="d-title">${c ? esc(c.n) : "This place"}</h2>
     <div class="d-modern">📍 ${lat.toFixed(1)}°, ${lng.toFixed(1)}° ${c ? "· today's country" : ""}</div>
     <div class="d-sec"><h4>What was here in ${fmtYear(y)}</h4>
-      ${here.length ? here.map(e => `<div class="civrow" data-ent="${e.id}"><span class="sw" style="background:${REG_COLORS[e.reg]}"></span>${esc(e.name)}<span class="yrs">${fmtRange(e.start, e.end)}</span></div>`).join("")
+      ${here.length ? here.map(e => `<div class="civrow" data-ent="${e.id}"><span class="sw" style="background:${REG_COLORS[e.reg]}"></span>${esc(nameAt(e, y))}<span class="yrs">${fmtRange(e.start, e.end)}</span></div>`).join("")
       : `<p class="muted small">${y >= 1700 && c ? `Atlas has no deep profile covering this spot in ${fmtYear(y)} — see ${esc(c.n)}'s timeline below for what was happening.` : `No major state in Atlas covers this exact spot in ${fmtYear(y)}. That often means smaller societies, nomadic peoples or regions with few written records — see the land's history below.`}</p>`}</div>
     ${c ? `<p style="line-height:1.6">${esc(c.sum)}</p>
       <div class="d-actions"><button class="btn sm primary" data-open="country:${c.id}">Full history of ${esc(c.n)} →</button>${st ? `<button class="btn sm primary" data-open="country:${st.id}">${esc(st.n)} (state) →</button>` : ""}</div>
@@ -879,6 +913,16 @@ function renderChains() {
 // =====================================================================
 // STORIES
 // =====================================================================
+function storyLinks(ch) {
+  const cid = countryAt(ch.lat, ch.lng);
+  const civs = ENT.filter(e => ch.y >= e.start && ch.y <= e.end && distKm(ch.lat, ch.lng, e.lat, e.lng) <= e.r * 1.1).sort((a, b) => a.r - b.r).slice(0, 4);
+  const people = TOPICS.filter(t => t.k === "person" && (t.y2 ? ch.y >= t.y - 10 && ch.y <= t.y2 + 10 : Math.abs(t.y - ch.y) <= 30) && distKm(ch.lat, ch.lng, t.lat, t.lng) < 1500).slice(0, 5);
+  if (!cid && !civs.length && !people.length) return "";
+  return `<div class="chips" style="margin-top:10px"><span class="muted small">Explore:</span>
+    ${cid ? chip("country:" + cid, cById[cid].n + " history") : ""}
+    ${civs.map(e => chip("ent:" + e.id, nameAt(e, ch.y))).join("")}
+    ${people.map(t => chip("topic:" + t.id, t.n)).join("")}</div>`;
+}
 function renderStories() {
   $("#storyList").innerHTML = `<h3>Stories</h3><p class="muted small">Curated journeys through big historical transformations.</p>` +
     STORIES.map(s => `<div class="item ${s.id === S.story ? "active" : ""}" data-s="${s.id}"><div class="t">${esc(s.name)}</div><div class="s"><span class="tag">${s.cat}</span> ${esc(s.sum)}</div></div>`).join("");
@@ -910,6 +954,7 @@ function renderStories() {
         ${S.storyCh < st.ch.length - 1 ? `<button class="btn sm primary" id="sNext">Next chapter →</button>` : ""}
         ${chip("year:" + ch.y, "Open " + fmtYear(ch.y) + " in World Explorer →")}
       </div>
+      ${storyLinks(ch)}
     </div>`}`;
   $("#storyBody").querySelectorAll("[data-ch]").forEach(el => el.onclick = () => { S.storyCh = +el.dataset.ch; renderStories(); });
   $("#storyBody").querySelectorAll("[data-d]").forEach(el => el.onclick = () => { S.depth = el.dataset.d; renderStories(); });
