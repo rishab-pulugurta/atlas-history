@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atlas — Explore the world through time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="css/style.css?v=8">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo">◐</span><span>Atlas</span><small>explore the world through time</small></div>
+  <nav id="nav">
+    <button data-view="explore" class="active">World Explorer</button>
+    <button data-view="countries">Countries</button>
+    <button data-view="encyclopedia">Encyclopedia</button>
+    <button data-view="discover">Discover</button>
+    <button data-view="connections">Connections</button>
+    <button data-view="stories">Stories</button>
+    <button data-view="compare">Compare</button>
+    <button data-view="ask">Ask Atlas</button>
+    <button data-view="library">Library <span id="libCount" class="pill"></span></button>
+  </nav>
+</header>
+
+<main>
+  <!-- WORLD EXPLORER -->
+  <section id="view-explore" class="view active">
+    <aside class="layers" id="layers"></aside>
+    <div class="mapwrap">
+      <div id="map"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <aside class="drawer" id="drawer"></aside>
+    <footer class="timeline">
+      <div class="tl-row">
+        <button id="playBtn" class="btn round" title="Play history forward">▶</button>
+        <div class="tl-year">
+          <div id="yearBig">500 BCE</div>
+          <input id="yearInput" placeholder="Jump: 1200, 500 BCE…">
+        </div>
+        <div class="tl-track">
+          <input type="range" id="slider" min="0" max="1000" value="0">
+          <div id="ticks" class="ticks"></div>
+        </div>
+      </div>
+      <div class="tl-row2">
+        <div id="eraChips" class="chips"></div>
+        <div id="eraSummary" class="era-summary"></div>
+      </div>
+    </footer>
+  </section>
+
+  <!-- COUNTRIES -->
+  <section id="view-countries" class="view split">
+    <aside class="list" id="countryList"></aside>
+    <div class="split-main">
+      <div id="countryMap" class="minimap"></div>
+      <div id="countryBody" class="chain-body"></div>
+    </div>
+  </section>
+
+  <!-- ENCYCLOPEDIA -->
+  <section id="view-encyclopedia" class="view page">
+    <div class="page-inner">
+      <h1 class="h1">Encyclopedia</h1>
+      <p class="muted">People, philosophers, religions, books, foods, inventions and culture — each tied to a place, a time, and where you still see it today.</p>
+      <div class="toolbar">
+        <input id="encSearch" placeholder="Search people, books, foods, ideas… (e.g. Rumi, tea, printing)">
+        <select id="encRegion"></select>
+        <select id="encEra"></select>
+      </div>
+      <div id="encKinds" class="chips" style="margin-bottom:14px"></div>
+      <div id="encCount" class="muted small" style="margin-bottom:8px"></div>
+      <div id="encGrid" class="grid"></div>
+    </div>
+  </section>
+
+  <!-- DISCOVER -->
+  <section id="view-discover" class="view page">
+    <div class="page-inner">
+      <div id="fotd" class="hero"></div>
+      <div class="toolbar">
+        <input id="factSearch" placeholder="Search facts… (e.g. airlines, heist, coffee)">
+        <div class="seg" id="factMode">
+          <button data-mode="cards" class="active">Cards</button>
+          <button data-mode="flash">Flashcards</button>
+        </div>
+        <select id="factCountry" title="Facts about one country"></select>
+        <button class="btn" id="surpriseBtn">🎲 Surprise me</button>
+      </div>
+      <div id="factCats" class="chips"></div>
+      <div id="factGrid" class="grid"></div>
+    </div>
+  </section>
+
+  <!-- CONNECTIONS -->
+  <section id="view-connections" class="view split">
+    <aside class="list" id="chainList"></aside>
+    <div class="split-main">
+      <div id="chainMap" class="minimap"></div>
+      <div id="chainBody" class="chain-body"></div>
+    </div>
+  </section>
+
+  <!-- STORIES -->
+  <section id="view-stories" class="view split">
+    <aside class="list" id="storyList"></aside>
+    <div class="split-main">
+      <div id="storyMap" class="minimap"></div>
+      <div id="storyBody" class="chain-body"></div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section id="view-compare" class="view page">
+    <div class="page-inner" id="compareBody"></div>
+  </section>
+
+  <!-- ASK -->
+  <section id="view-ask" class="view page">
+    <div class="page-inner">
+      <h1 class="h1">Ask Atlas</h1>
+      <p class="muted">Search everything in Atlas and get a reasoned answer with places on a map, a chain of connections, and what historians debate. Answers use a free model that runs in your browser by default (change in ⚙︎).</p>
+      <form id="askForm" class="askbar">
+        <input id="askInput" placeholder="e.g. Why did Rome defeat Carthage? · How did Buddhism reach Japan? · How do airlines make money?">
+        <button class="btn primary">Ask</button>
+        <button type="button" class="btn" id="settingsBtn" title="Settings">⚙︎</button>
+      </form>
+      <div id="askSuggest" class="chips"></div>
+      <div id="askAnswer"></div>
+      <div id="askMap" class="minimap hidden"></div>
+      <div id="askResults"></div>
+    </div>
+  </section>
+
+  <!-- LIBRARY -->
+  <section id="view-library" class="view page">
+    <div class="page-inner" id="libraryBody"></div>
+  </section>
+</main>
+
+<button id="chatFab" class="chat-fab" title="Ask about what you're viewing">💬 <span id="chatFabLabel">Ask Atlas</span></button>
+<div id="chat" class="chat hidden">
+  <div class="chat-head"><div><div class="muted small">Asking about</div><b id="chatCtx">Atlas</b></div>
+    <div class="chips"><button class="btn sm" id="chatKey" title="API key settings">⚙︎</button><button class="btn sm" id="chatClear" title="New conversation">↺</button><button class="btn sm" id="chatClose">✕</button></div></div>
+  <div id="chatMsgs" class="chat-msgs"></div>
+  <div id="chatSuggest" class="chips chat-suggest"></div>
+  <form id="chatForm" class="chat-form"><textarea id="chatInput" rows="2" placeholder="Ask anything about this…"></textarea><button class="btn primary">Send</button></form>
+</div>
+<div id="modal" class="modal hidden"><div class="modal-card" id="modalCard"></div></div>
+<div id="toast" class="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="js/data/entities.js?v=8"></script>
+<script src="js/data/entities_more1.js?v=8"></script>
+<script src="js/data/entities_more2.js?v=8"></script>
+<script src="js/data/entities_more3.js?v=8"></script>
+<script src="js/data/events.js?v=8"></script>
+<script src="js/data/connections.js?v=8"></script>
+<script src="js/data/stories.js?v=8"></script>
+<script src="js/data/facts.js?v=8"></script>
+<script src="js/data/facts2.js?v=8"></script>
+<script src="js/data/sources.js?v=8"></script>
+<script src="js/data/countries_asia.js?v=8"></script>
+<script src="js/data/countries_europe.js?v=8"></script>
+<script src="js/data/countries_africa.js?v=8"></script>
+<script src="js/data/countries_pacific.js?v=8"></script>
+<script src="js/data/countries_americas.js?v=8"></script>
+<script src="js/data/topics.js?v=8"></script>
+<script src="js/data/borders.js?v=8"></script>
+<script src="js/data/states_1.js?v=8"></script>
+<script src="js/data/states_2.js?v=8"></script>
+<script src="js/data/borders_us.js?v=8"></script>
+<script src="js/data/cfacts_asia.js?v=8"></script>
+<script src="js/data/cfacts_europe.js?v=8"></script>
+<script src="js/data/cfacts_africa.js?v=8"></script>
+<script src="js/data/cfacts_pacific.js?v=8"></script>
+<script src="js/data/cfacts_americas.js?v=8"></script>
+<script src="js/data/sfacts_1.js?v=8"></script>
+<script src="js/data/sfacts_2.js?v=8"></script>
+<script src="js/data/tl_1.js?v=8"></script>
+<script src="js/data/tl_2.js?v=8"></script>
+<script src="js/data/tl_3.js?v=8"></script>
+<script src="js/app.js?v=8"></script>
+</body>
+</html>

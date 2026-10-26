@@ -1,0 +1,101 @@
+// Per-country fact banks: the Americas.
+window.ATLAS_CFACTS = window.ATLAS_CFACTS || {};
+Object.assign(window.ATLAS_CFACTS, {
+usa: [
+  ["war", "The Civil War (1861–65) killed ~620,000–750,000 — more American soldiers than every other US war combined until Vietnam."],
+  ["war", "The US has had troops in combat in most years since 1945 (Korea, Vietnam, Gulf War, Afghanistan, Iraq…)."],
+  ["war", "The Manhattan Project employed ~130,000 people; most didn't know they were building a bomb."],
+  ["gov", "Four presidents were assassinated (Lincoln, Garfield, McKinley, Kennedy); Reagan and Trump survived being shot."],
+  ["gov", "FDR was elected four times; the 22nd Amendment (1951) then limited presidents to two terms."],
+  ["gov", "The Electoral College has given the presidency to the popular-vote loser five times (1824, 1876, 1888, 2000, 2016)."],
+  ["inv", "American inventions: the light bulb (Edison/Swan), telephone (Bell, contested), airplane, transistor, laser, internet (ARPANET), personal computer, GPS, the assembly line, air conditioning (Carrier), the polio vaccine, the iPhone."],
+  ["biz", "Standard Oil once controlled ~90% of US oil refining; John D. Rockefeller is often called the richest American ever (inflation-adjusted). It was broken into 34 companies in 1911 — ancestors of Exxon, Mobil and Chevron."],
+  ["biz", "Most of the world's most valuable companies — Nvidia, Apple, Microsoft, Alphabet, Amazon — are American, and the dollar is used in roughly 90% of foreign-exchange trades."],
+  ["crime", "Jimmy Hoffa, Teamsters boss jailed for jury tampering and fraud, disappeared in 1975; the FBI has dug up fields and a stadium rumor persists."],
+  ["crime", "The Mafia's 'Commission' was exposed after the 1957 Apalachin meeting; RICO (1970) let prosecutors take down whole crime families."],
+  ["crime", "Prohibition (1920–33) gave rise to Capone, speakeasies and organized crime's fortunes."],
+  ["ppl", "Washington, Lincoln, Frederick Douglass, Edison, the Wright brothers, Einstein, MLK, Steve Jobs, Oprah, Michael Jordan, Taylor Swift."],
+  ["niche", "The US has no official national language at the constitutional level; English was declared official by executive order in 2025."],
+  ["niche", "There's a 'Lost Colony' (Roanoke, 1587) — its settlers vanished, leaving 'CROATOAN' carved on a post."]
+],
+can: [
+  ["war", "Canadian troops captured Vimy Ridge (1917) — a founding moment of national identity; Canada also took Juno Beach on D-Day."],
+  ["war", "In 1812 Canadians and British burned the White House in retaliation for the US burning York (Toronto)."],
+  ["gov", "Canada's head of state is the British monarch; the country gained full constitutional control only in 1982."],
+  ["gov", "Quebec's 1995 independence referendum failed by about 50.6% to 49.4%."],
+  ["inv", "Canadian inventions: insulin (Banting & Best), basketball, the telephone (Bell, in Brantford), the paint roller, the Wonderbra, IMAX, the snowmobile, the pacemaker (external), the egg carton, Superman (co-creator Joe Shuster), Trivial Pursuit, Hawaiian pizza (Sam Panopoulos)."],
+  ["biz", "The 2012 'Great Maple Syrup Heist' stole ~3,000 tonnes (~$18.7 million) from Quebec's strategic syrup reserve."],
+  ["crime", "Residential schools (1880s–1996) separated ~150,000 Indigenous children from their families; thousands died. Canada's Truth and Reconciliation Commission called it cultural genocide."],
+  ["niche", "Canada has ~60% of the world's lakes."]
+],
+mex: [
+  ["war", "The Mexican-American War (1846–48) cost Mexico ~half its territory — California, Texas, Arizona, New Mexico and more."],
+  ["war", "The 'Pastry War' (1838): France invaded Mexico partly over a French pastry chef's damaged shop."],
+  ["gov", "The PRI party ruled Mexico for 71 years (1929–2000); writer Mario Vargas Llosa called it 'the perfect dictatorship'."],
+  ["inv", "Mexican contributions: chocolate, chewing gum (chicle), the color TV (Guillermo González Camarena's early system), the birth control pill (synthesized from Mexican yams, Luis Miramontes)."],
+  ["crime", "El Chapo Guzmán escaped prison twice — once through a mile-long tunnel with a motorcycle on rails (2015); he's now in a US supermax."],
+  ["crime", "The 2014 disappearance of 43 Ayotzinapa students became a national scandal involving police and cartels."],
+  ["ppl", "Frida Kahlo, Diego Rivera, Benito Juárez (Zapotec, first Indigenous president), Emiliano Zapata, Octavio Paz, Guillermo del Toro, Alfonso Cuarón, Carlos Slim."],
+  ["niche", "Mexico City has more museums than almost any city on Earth (~150+)."]
+],
+gtm: [["gov", "The 1954 CIA coup (Operation PBSuccess) ousted elected president Árbenz after land reform threatened United Fruit."], ["crime", "In 2015 protests forced President Otto Pérez Molina to resign over a customs bribery ring ('La Línea')."], ["niche", "Tikal's Temple IV (~70 m) appears as the rebel base in Star Wars: A New Hope."]],
+blz: [["niche", "Belize is the only Central American country where English is official."], ["niche", "The Great Blue Hole is a 300-m-wide marine sinkhole visible from space."]],
+hnd: [["war", "The 1969 'Football War' with El Salvador lasted 100 hours, sparked by World Cup qualifiers and migration tensions."], ["crime", "Ex-president Juan Orlando Hernández was convicted in the US of drug trafficking (2024) — then pardoned by President Trump in 2025."], ["niche", "Honduras is the original 'banana republic', coined by O. Henry (1904)."]],
+slv: [["gov", "El Salvador was the first country to make Bitcoin legal tender (2021) — and walked it back in 2025 under an IMF deal."], ["crime", "President Bukele's crackdown has jailed ~1.5–2% of adults; homicide rates plummeted."], ["ppl", "Archbishop Óscar Romero, assassinated while saying Mass (1980), was canonized in 2018."]],
+nic: [["gov", "In 1856 American filibuster William Walker declared himself president of Nicaragua and legalized slavery; he was executed in Honduras in 1860."], ["crime", "Iran–Contra: US officials secretly funded Contra rebels with Iranian arms-sale money."], ["niche", "Lake Nicaragua has freshwater bull sharks."]],
+cri: [["gov", "Costa Rica abolished its army in 1948 and spent the money on education and health."], ["niche", "Costa Rica has ~5% of the world's biodiversity in 0.03% of its land."]],
+pan: [["war", "Operation Just Cause (1989): US troops captured Manuel Noriega after blasting rock music at the Vatican embassy where he hid."], ["crime", "The Panama Papers leak (2016) came from Panamanian law firm Mossack Fonseca."], ["niche", "Ships pay huge tolls; the cheapest-ever canal toll was 36 cents, paid by swimmer Richard Halliburton (1928)."]],
+cub: [
+  ["war", "The Bay of Pigs invasion (1961) by CIA-trained exiles was defeated in three days."],
+  ["war", "During the 1962 Missile Crisis, Soviet submarine officer Vasili Arkhipov refused to approve a nuclear torpedo launch."],
+  ["gov", "The CIA plotted to kill Castro many times — schemes included an exploding cigar and a poisoned diving suit; Castro claimed 638 attempts."],
+  ["biz", "Havana's 1950s casinos were run by American mobsters (Meyer Lansky, Santo Trafficante) — the setting of The Godfather Part II."],
+  ["niche", "Cuba has ~60,000 pre-1960 American cars still on the road."]
+],
+hti: [["war", "Haitian troops fought alongside Americans at the 1779 Siege of Savannah during the US Revolution."], ["gov", "'Papa Doc' Duvalier's Tonton Macoutes militia terrorized Haiti; he declared himself president for life."], ["niche", "Haiti's independence soup (soup joumou) — once reserved for enslavers — is eaten every January 1."]],
+dom: [["gov", "Trujillo renamed the capital 'Ciudad Trujillo' and had signs saying 'God and Trujillo'; he was assassinated in 1961."], ["niche", "Santo Domingo has the first cathedral, university and hospital in the Americas."]],
+jam: [["war", "The Maroons — escaped enslaved people — fought Britain to a treaty in 1739."], ["ppl", "Usain Bolt still holds the 100 m (9.58 s) and 200 m world records (2009)."], ["niche", "The Jamaican bobsled team (1988) inspired the film Cool Runnings."], ["niche", "Port Royal, the 'wickedest city on Earth' (a pirate haven), sank in a 1692 earthquake."]],
+bhs: [["crime", "FTX's Sam Bankman-Fried was arrested in the Bahamas (2022)."], ["niche", "Pigs swim at Big Major Cay, the famous 'Pig Beach'."]],
+brb: [["gov", "Barbados removed Queen Elizabeth II as head of state in 2021."], ["ppl", "Rihanna was named a National Hero in 2021."]],
+tto: [["inv", "The steelpan was invented in Trinidad in the 1930s–40s from oil drums."], ["niche", "Trinidad's Pitch Lake is the world's largest natural asphalt deposit — it paved streets worldwide."]],
+grd: [["war", "The 1983 US invasion (Operation Urgent Fury) followed a coup; it lasted days."]],
+lca: [["ppl", "Saint Lucia has two Nobel laureates — Sir Arthur Lewis (economics) and Derek Walcott (literature) — both born on 23 January."]],
+vct: [["niche", "Captain Bligh brought breadfruit here in 1793 — the Mutiny on the Bounty had interrupted his first try."]],
+atg: [["crime", "Texan Allen Stanford, knighted by Antigua, ran a $7 billion Ponzi scheme from the island; he got 110 years."]],
+kna: [["biz", "St Kitts pioneered selling citizenship for investment (1984)."]],
+dma: [["niche", "Dominica's flag features the Sisserou parrot — one of two national flags with purple."]],
+col: [
+  ["war", "Colombia's conflict with FARC (1964–2016) killed ~450,000 people."],
+  ["crime", "Pablo Escobar's Medellín cartel supplied ~80% of US cocaine at its peak; Escobar offered to pay off Colombia's national debt for immunity."],
+  ["crime", "The 'false positives' scandal: soldiers killed ~6,400 civilians and dressed them as guerrillas (2002–08) to boost body counts."],
+  ["ppl", "Gabriel García Márquez, Shakira, Sofía Vergara, Fernando Botero, Juan Pablo Montoya, J Balvin."],
+  ["niche", "Colombia has the most bird species of any country (~1,900+)."]
+],
+ven: [["gov", "Hugo Chávez hosted a weekly TV show (Aló Presidente) that could run 8 hours."], ["biz", "Venezuela has the world's largest proven oil reserves but suffered hyperinflation of over 1,000,000% (2018)."], ["niche", "Lake Maracaibo's Catatumbo lightning strikes up to ~280 times an hour, ~160 nights a year."]],
+ecu: [["gov", "Ecuador's 2008 constitution was the first to grant rights to nature."], ["niche", "Because of Earth's bulge, Ecuador's Chimborazo summit is the farthest point from Earth's center."], ["crime", "Julian Assange lived in Ecuador's London embassy for nearly 7 years (2012–19)."]],
+per: [["war", "The War of the Pacific (1879–84) — Chile vs Peru and Bolivia over nitrate deposits."], ["crime", "Ex-president Alberto Fujimori fled to Japan and faxed his resignation (2000); later convicted of human rights abuses."], ["inv", "Andean farmers developed ~4,000 potato varieties and freeze-dried food (chuño)."], ["niche", "The Nazca Lines are best seen from the air; new ones are still being found with AI (2024)."]],
+bol: [["gov", "Bolivia has had more coups than almost any country (~190 attempts by some counts)."], ["niche", "Bolivia has two capitals: La Paz (government) and Sucre (constitutional)."], ["niche", "Bolivia's navy patrols Lake Titicaca and still marks a 'Day of the Sea' for its lost coast."]],
+chl: [["war", "Pinochet's 1973 coup: Allende died in the presidential palace as jets bombed it; ~3,000 were killed or disappeared."], ["gov", "In 2022 Chileans rejected a new progressive constitution by 62%."], ["niche", "The Atacama Desert has places where rain has never been recorded."], ["niche", "In 2010, 33 Chilean miners survived 69 days underground."]],
+arg: [
+  ["war", "The 1982 Falklands War lasted 74 days; Argentina's junta fell soon after."],
+  ["gov", "Argentina's 'Dirty War' (1976–83) 'disappeared' up to 30,000 people; the Mothers of the Plaza de Mayo still march."],
+  ["gov", "In 2001 Argentina had five presidents in two weeks."],
+  ["biz", "Argentina has defaulted on its debt nine times."],
+  ["crime", "Nazi war criminals including Adolf Eichmann and Josef Mengele hid in Argentina after WWII."],
+  ["inv", "Argentine inventions: the ballpoint pen (Bíró, who emigrated there), fingerprint forensics (Vucetich), the bypass surgery technique (Favaloro), the animated feature film (El Apóstol, 1917)."],
+  ["niche", "Argentina has a town, Ushuaia, often called the world's southernmost city."]
+],
+ury: [["gov", "President José Mujica ('Pepe') donated ~90% of his salary and drove a 1987 VW Beetle."], ["niche", "Uruguay's 1972 Andes flight survivors (Alive) lasted 72 days."]],
+pry: [["war", "The War of the Triple Alliance (1864–70) may have killed ~60–70% of Paraguay's population, including most men."], ["niche", "Paraguay's flag has different designs on front and back."]],
+bra: [
+  ["war", "Brazil sent ~25,000 soldiers to fight in Italy in WWII — the only Latin American country to send ground troops."],
+  ["gov", "Brazil was the seat of the Portuguese Empire (1808–21) — the only time a European capital moved to a colony."],
+  ["gov", "Lula was jailed for corruption (2018), freed when convictions were annulled, and re-elected (2022)."],
+  ["crime", "Operation Car Wash (Lava Jato, 2014–21) uncovered billions in bribes around Petrobras, ensnaring presidents across Latin America."],
+  ["inv", "Brazilian inventions: Santos-Dumont's 14-bis (claimed first airplane flight, 1906), the wristwatch (popularized by Santos-Dumont with Cartier), caller ID (disputed), the electronic voting machine."],
+  ["ppl", "Pelé, Ayrton Senna, Paulo Coelho, Oscar Niemeyer (designed Brasília), Marta (six-time FIFA World Player), Anitta."],
+  ["niche", "Brazil has more Catholics than any other country and the largest Japanese population outside Japan (~2 million)."]
+],
+guy: [["crime", "The 1978 Jonestown massacre killed 900+ members of Jim Jones's Peoples Temple, including a US congressman — 'drinking the Kool-Aid' (it was Flavor Aid)."], ["biz", "Guyana's oil discoveries made it the world's fastest-growing economy in 2022 (~60%)."]],
+sur: [["niche", "Suriname is the only Dutch-speaking country in the Americas."], ["gov", "Ex-president Dési Bouterse was convicted in absentia in the Netherlands for drug trafficking and at home for the 1982 'December murders'."]]
+});
